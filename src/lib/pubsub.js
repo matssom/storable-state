@@ -11,7 +11,15 @@ export default class PubSub {
             self.events[event] = [];
         }
 
-        return self.events[event].push(callback);
+        self.events[event].push(callback);
+        
+        return () => self.events[event].push(callback);
+    }
+
+    unsubscribe(event, subscriber) {
+        
+        let self = this;
+        return self.events[event].splice(subscriber, 1).length >= 1 ? true : false;
     }
 
     publish(event, data = {}) {

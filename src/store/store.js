@@ -1,76 +1,39 @@
-import PubSub from '../lib/pubsub';
+import PubSub from '../lib/pubsub.js';
 
 export default class Store {
-    constructor(params) {
-        let self = this;
-        self.actions = {};
-        self.mutations = {};
-        self.state = {};
-        self.status = 'resting';
-        self.events = new PubSub();
 
-        if(params.hasOwnProperty('actions')) {
-            self.actions = params.actions;
-        }
+    constructor(initialState, init) {
+        this.self = this;
 
-        if(params.hasOwnProperty('mutations')) {
-            self.mutations = params.mutations;
-        }
-
-        self.state = new Proxy((params.state || {}), {
-            set: function(state, key, value) {
-
-                state[key] = value;
-
-                console.log(`stateChange: ${key}: ${value}`);
-
-                self.events.publish('stateChange', self.state);
-
-                if(self.status !== 'mutation') {
-                    console.warn(`You should use a mutation to set ${key}`);
-                }
-
-                self.status = 'resting';
-
-                return true;
-            }
-        });
+        self.state = initialState;
+        self.event = new PubSub();
+        self.init = init instanceof Function ? init : () => {};
     }
 
-    dispatch(actionKey, payload) {
-
-        let self = this;
-
-        if(typeof self.actions[actionKey] !== 'function') {
-            console.error(`Action "${actionKey} doesn't exist.`);
-            return false;
-        }
-
-        console.groupCollapsed(`ACTION: ${actionKey}`);
-
-        self.status = 'action';
-
-        self.actions[actionKey](self, payload);
-
-        console.groupEnd();
-
-        return true;
+    set(newState) {
+        self.state = newState;
+        self.event.publish('STATE_CHANGE', newState);
     }
 
-    commit(mutationKey, payload) {
-        let self = this;
-
-        if(typeof self.mutations[mutationKey] !== 'function') {
-            console.log(`Mutation "${mutationKey}" doesn't exist`);
-            return false;
-        }
-
-        self.status = 'mutation';
-
-        let newState = self.mutations[mutationKey](self.state, payload);
-
-        self.state = Object.assign(self.state, newState);
-
-        return true;
+    update(mutator) {
+        if (mutator instanceof Function) self.state = mutator(self.state);
+        self.event.publish('STATE_CHANGE', self.state);
     }
+
+    subscribe(subscriber) {
+
+        subscriber(self.state);
+
+        self.event.subscribe('STATE_CHANGE', subscriber);
+        if (self.event.events['STATE_CHANGE'].length === 1) self.cleanup = init();
+
+        return () => {
+            if (
+                    self.cleanup instanceof Function && 
+                    self.event.unsubscribe('STATE_CHANGE', subscriber) && 
+                    self.event.events['STATE_CHANGE'].length === 0
+                ) cleanup();
+        }
+    }
+
 }
