@@ -1,5 +1,5 @@
 {
-  "name": "storable",
+  "name": "storable-state",
   "version": "1.0.0",
   "description": "Store that enables easy statemanagement with localstorage integration",
   "main": "index.js",
