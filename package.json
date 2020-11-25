@@ -1,12 +1,18 @@
 {
   "name": "storable-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Store that enables easy statemanagement with localstorage integration",
   "main": "index.js",
   "scripts": {
     "example": "webpack --config example.config.js"
   },
-  "keywords": ["store", "storable", "pubsub", "state", "state-management"],
+  "keywords": [
+    "store",
+    "storable",
+    "pubsub",
+    "state",
+    "state-management"
+  ],
   "author": "Mats Sommervold <mats@sommervold.net> (https://matssom.com)",
   "license": "MIT",
   "dependencies": {},
