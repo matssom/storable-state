@@ -1,3 +1,7 @@
-import Store from './src/store/store.js';
+// Author: Mats Sommervold - https://github.com/matssom/svelte-storable.git - MIT license
 
-export const storable = (initialState, event) => new Store(initialState, event);
+import Store from './src/store/store.js';
+import Storable from './src/store/storable.js';
+
+export const writable = (initialState, event) => new Store(initialState, event);
+export const storable = (initialState, event) => new Storable(initialState, event);
