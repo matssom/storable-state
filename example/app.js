@@ -90,7 +90,20 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dist_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../dist/index.js */ \"./dist/index.js\");\n\r\n\r\nconst countable = (initial = 0) => {\r\n    const subscribe = (0,_dist_index_js__WEBPACK_IMPORTED_MODULE_0__.readable)(initial, set => {\r\n        console.log('got my first count subscriber');\r\n        let value = 100\r\n        set(value)\r\n        const interval = setInterval(() => {\r\n            value--\r\n            set(value)\r\n        }, 1000)\r\n\r\n        return () => {\r\n            console.log('lost my last count subscriber')\r\n            clearInterval(interval)\r\n        }\r\n    });\r\n\r\n    return subscribe\r\n}\r\n\r\nconst count = countable(null);\r\nlet unsub;\r\n\r\nconst setupCounter = (root) => {\r\n    unsub = count(count => {\r\n        root.innerText = count;\r\n    });\r\n}\r\n\r\ndocument.querySelector('#increment').addEventListener('click',() => count.increment());\r\ndocument.querySelector('#decrement').addEventListener('click',() => count.decrement());\r\ndocument.querySelector('#unsubscribe').addEventListener('click',() => unsub());\r\ndocument.querySelector('#subscribe').addEventListener('click',() => setupCounter(document.querySelector('#counter')));\n\n//# sourceURL=webpack://storable-state/./example/src/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _readable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./readable.js */ \"./example/src/readable.js\");\n\r\n\r\ndocument.querySelector('#increment').addEventListener('click',() => count.increment());\r\ndocument.querySelector('#decrement').addEventListener('click',() => count.decrement());\r\ndocument.querySelector('#unsubscribe').addEventListener('click',() => unsub());\r\ndocument.querySelector('#subscribe').addEventListener('click',() => setupCounter(document.querySelector('#counter')));\n\n//# sourceURL=webpack://storable-state/./example/src/app.js?");
+
+/***/ }),
+
+/***/ "./example/src/readable.js":
+/*!*********************************!*\
+  !*** ./example/src/readable.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dist_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../dist/index.js */ \"./dist/index.js\");\n\r\n\r\nconst countable = (initial = 0) => {\r\n    const subscribe = (0,_dist_index_js__WEBPACK_IMPORTED_MODULE_0__.readable)(initial, set => {\r\n        console.log('got my first count subscriber');\r\n        let value = 100\r\n        set(value)\r\n        const interval = setInterval(() => {\r\n            value--\r\n            set(value)\r\n        }, 1000)\r\n\r\n        return () => {\r\n            console.log('lost my last count subscriber')\r\n            clearInterval(interval)\r\n        }\r\n    });\r\n\r\n    return subscribe\r\n}\r\n\r\nconst count = countable(null);\r\nlet unsub;\r\n\r\nconst setupCounter = (root) => {\r\n    unsub = count(count => {\r\n        root.innerText = count;\r\n    });\r\n}\n\n//# sourceURL=webpack://storable-state/./example/src/readable.js?");
 
 /***/ })
 
