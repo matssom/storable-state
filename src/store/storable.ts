@@ -3,7 +3,7 @@ import Writable from './store.js';
 class Storable extends Writable {
     private key
 
-    constructor(key : string, value : any, start? : Function) {
+    constructor(key : string, value? : any, start? : Function) {
         super(value, start);
         this.key = key;
         this.retrieve();

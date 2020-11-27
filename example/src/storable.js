@@ -1,7 +1,7 @@
 import { storable } from '../../dist/index.js';
 
 const countable = (key) => {
-    const { set, update, subscribe} = storable(key, 0, () => {
+    const { update, subscribe} = storable(key, 0, () => {
         console.log("sub")
         return () => console.log("unsub")
     });
@@ -27,3 +27,5 @@ document.querySelector('#increment').addEventListener('click',() => count.increm
 document.querySelector('#decrement').addEventListener('click',() => count.decrement());
 document.querySelector('#unsubscribe').addEventListener('click',() => unsub());
 document.querySelector('#subscribe').addEventListener('click',() => setupCounter(document.querySelector('#counter')));
+
+setupCounter(document.querySelector('#counter'));

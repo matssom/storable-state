@@ -11,7 +11,7 @@ export default class Store {
      * @param value initial value
      * @param start start and stop notifications for subscriptions
      */
-    constructor(value : any, start? : Function) {
+    constructor(value? : any, start? : Function) {
 
         this.state = value;
         this.event = new PubSub();
