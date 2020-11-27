@@ -16,13 +16,12 @@
   \***********************/
 /*! namespace exports */
 /*! export readable [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export store [provided] [no usage info] [missing usage info prevents renaming] */
 /*! export writable [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"store\": () => /* binding */ store,\n/* harmony export */   \"writable\": () => /* binding */ writable,\n/* harmony export */   \"readable\": () => /* binding */ readable\n/* harmony export */ });\n/* harmony import */ var _store_store_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/store.js */ \"./dist/store/store.js\");\n/* harmony import */ var _store_writable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/writable.js */ \"./dist/store/writable.js\");\n/* harmony import */ var _store_readable_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/readable.js */ \"./dist/store/readable.js\");\n// Author: Mats Sommervold - https://github.com/matssom/svelte-storable.git - MIT license\r\n\r\n\r\n\r\nconst store = (value, start) => new _store_store_js__WEBPACK_IMPORTED_MODULE_0__.default(value, start);\r\nconst writable = (value, start) => (0,_store_writable_js__WEBPACK_IMPORTED_MODULE_1__.default)(value, start);\r\nconst readable = (value, start) => (0,_store_readable_js__WEBPACK_IMPORTED_MODULE_2__.default)(value, start);\r\n//# sourceMappingURL=index.js.map\n\n//# sourceURL=webpack://storable-state/./dist/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"writable\": () => /* binding */ writable,\n/* harmony export */   \"readable\": () => /* binding */ readable\n/* harmony export */ });\n/* harmony import */ var _store_writable_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/writable.js */ \"./dist/store/writable.js\");\n/* harmony import */ var _store_readable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/readable.js */ \"./dist/store/readable.js\");\n// Author: Mats Sommervold - https://github.com/matssom/svelte-storable.git - MIT license\r\n\r\n\r\nconst writable = (value, start) => (0,_store_writable_js__WEBPACK_IMPORTED_MODULE_0__.default)(value, start);\r\nconst readable = (value, start) => (0,_store_readable_js__WEBPACK_IMPORTED_MODULE_1__.default)(value, start);\r\n//# sourceMappingURL=index.js.map\n\n//# sourceURL=webpack://storable-state/./dist/index.js?");
 
 /***/ }),
 
