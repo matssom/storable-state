@@ -6,6 +6,7 @@ export default class Store {
      * @param start start and stop notifications for subscriptions
      */
     constructor(value, start) {
+        this.cleanup = [];
         this.state = value;
         this.event = new PubSub();
         this.start = start;
@@ -13,22 +14,25 @@ export default class Store {
         this.update = this.update.bind(this);
         this.subscribe = this.subscribe.bind(this);
     }
-    set(newState) {
-        throw new Error("Setting value of store is not allowed. Use writable instead");
+    set(newValue) {
+        this.state = newValue;
+        this.event.publish('STATE_CHANGE', newValue);
     }
     update(mutator) {
-        throw new Error("Updating store is not allowed. Use writable instead");
+        this.state = mutator(this.state);
+        this.event.publish('STATE_CHANGE', this.state);
     }
     subscribe(subscriber) {
         this.event.subscribe('STATE_CHANGE', subscriber);
         if (this.event.events['STATE_CHANGE'].length === 1)
-            this.cleanup = this.start();
+            if (this.start)
+                this.cleanup.push(this.start(this.set));
         subscriber(this.state);
         return () => {
-            if (this.cleanup instanceof Function &&
-                this.event.unsubscribe('STATE_CHANGE', subscriber) &&
+            if (this.event.unsubscribe('STATE_CHANGE', subscriber) &&
                 this.event.events['STATE_CHANGE'].length === 0) {
-                this.cleanup();
+                for (let fn of this.cleanup)
+                    fn();
             }
         };
     }
