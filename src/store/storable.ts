@@ -1,52 +1,34 @@
-import Writable from './writable.js'
+import Writable from './store.js';
 
-// import Writable from './store.js';
+class Storable extends Writable {
+    private key
 
-// export default class Store {
+    constructor(key : string, value : any, start? : Function) {
+        super(value, start);
+        this.key = key;
+        this.retrieve();
+    }
 
-//     constructor(key, initialValue, cleanup) {
-//         if(typeof key === 'undefined') throw new Error('Storables require a key to interact with local storage')
-//         this.key = key
-//         this.store = this._exists() ? new Writable(this._getData(), cleanup) : new Writable(initialValue, cleanup)
+    private save(value : any):void {
+        localStorage.setItem(this.key, JSON.stringify(value));
+    }
 
-//         this.set = this.set.bind(this);
-//         this.update = this.update.bind(this);
-//         this.subscribe = this.subscribe.bind(this);
-//         this.detatch = this.detatch.bind(this);
-//     }
+    private retrieve():void {
+        const value = localStorage.getItem(this.key);
+        if (!!value) this.set(JSON.parse(value));
+    }
 
-//     _exists () { return !!localStorage.getItem(this.key) }
+    set(newValue : any):void {
+        super.set(newValue);
+        this.save(newValue);
+    }
 
-//     _getData() {
-//         const DATA = localStorage.getItem(this.key)
-//         return JSON.parse(DATA)
-//     }
+    update(mutator : Function):void {
+        super.update(mutator);
+    }
 
-//     _setData(data) {
-//         const DATA = JSON.stringify(data)
-//         localStorage.setItem(this.key, DATA)
-//     }
+}
 
-//     set(data) {
-//         this._setData(data)
-//         this.store.set(data)
-//     }
-
-//     update(callback) {
-//         const update = (data) => {
-//             const newData = callback(data)
-//             this._setData(newData)
-//             return newData
-//         }
-//         this.store.update(update);
-//     }
-
-//     subscribe(callback) {
-//         return this.store.subscribe(callback)
-//     }
-
-//     detatch() {
-//         localStorage.removeItem(this.key)
-//         return true
-//     }
-// }
+export default (key : string, value : any, start? : Function) => {
+    return new Storable(key, value, start);
+}
