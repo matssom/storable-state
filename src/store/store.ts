@@ -3,7 +3,7 @@ import PubSub from '../lib/pubsub.js';
 export default class Store {
     protected state : any
     protected event : PubSub
-    protected cleanup : Array<Function> = [];
+    protected cleanup : Function
     private start : Function
 
     /**
@@ -28,14 +28,13 @@ export default class Store {
     }
 
     update(mutator : Function):void {
-        this.state = mutator(this.state);
-        this.event.publish('STATE_CHANGE', this.state);
+        this.set(mutator(this.state));
     }
 
     subscribe(subscriber : Function):Function {
 
         this.event.subscribe('STATE_CHANGE', subscriber);
-        if (this.event.events['STATE_CHANGE'].length === 1) if (this.start) this.cleanup.push(this.start(this.set));
+        if (this.event.events['STATE_CHANGE'].length === 1 && this.start) this.cleanup = this.start(this.set);
         subscriber(this.state)
 
         return () => {
@@ -44,7 +43,7 @@ export default class Store {
                 this.event.unsubscribe('STATE_CHANGE', subscriber) && 
                 this.event.events['STATE_CHANGE'].length === 0
             ) {
-                for (let fn of this.cleanup) fn();
+                if (this.cleanup) this.cleanup();
             }
         }
     }

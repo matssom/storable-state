@@ -16,14 +16,19 @@ const countable = (initial = 0) => {
         }
     });
 
-    return subscribe
+    return { subscribe }
 }
 
 const count = countable(null);
 let unsub;
 
 const setupCounter = (root) => {
-    unsub = count(count => {
+    unsub = count.subscribe(count => {
         root.innerText = count;
     });
 }
+
+document.querySelector('#increment').addEventListener('click',() => count.increment());
+document.querySelector('#decrement').addEventListener('click',() => count.decrement());
+document.querySelector('#unsubscribe').addEventListener('click',() => unsub());
+document.querySelector('#subscribe').addEventListener('click',() => setupCounter(document.querySelector('#counter')));
