@@ -1,7 +1,7 @@
-import { storable } from '../../src/store/store.js';
+import { writable } from '../../dist/index.js';
 
 const countable = (initial = 0) => {
-    const { set, update, subscribe } = storable(initial, () => {
+    const { set, update, subscribe } = writable(initial, () => {
         console.log('got my first count subscriber');
         return () => console.log('lost my last count subscriber');
     });
