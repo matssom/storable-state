@@ -1,6 +1,6 @@
-import PubSub from '../lib/pubsub.js';
+import Store from './store.js';
 
-export default class Store {
+export default class Writable extends Store {
 
     constructor(initialState, init) {
         this.self = this;
@@ -27,11 +27,14 @@ export default class Store {
         subscriber(self.state)
 
         return () => {
-            if (
-                    self.cleanup instanceof Function && 
-                    self.event.unsubscribe('STATE_CHANGE', subscriber) && 
-                    self.event.events['STATE_CHANGE'].length === 0
-                ) cleanup();
+            if 
+            (
+                self.cleanup instanceof Function && 
+                self.event.unsubscribe('STATE_CHANGE', subscriber) && 
+                self.event.events['STATE_CHANGE'].length === 0
+            ) {
+                cleanup();
+            }
         }
     }
 
