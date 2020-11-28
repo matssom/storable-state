@@ -133,14 +133,15 @@ You can extend the stores with your own buildt in methods if you would like. The
 import { storable } from 'storable';
 
 const createCountStore = (key = 'count') => {
-    const { subscribe, set, update, detatch } = storable(key, 0);
+    const { subscribe, set, update, detach, attach } = storable(key, 0);
 
     return {
-        subscribe,
         increase:   () => update((value) => value + 1),
         decrease:   () => update((value) => value - 1),
         reset:      () => set(0),
-        detatch:    () => detatch()
+        subscribe,
+        detach,
+        attach
     }
 }
 
