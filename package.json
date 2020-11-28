@@ -29,9 +29,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "files": [
-    "lib",
-    "store",
-    "index.js",
-    "index.js.map"
+    "lib/*.js",
+    "store/*.js",
+    "index.js"
   ]
 }
