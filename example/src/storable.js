@@ -1,4 +1,4 @@
-import { storable } from '../../dist/index.js';
+import { storable } from '../../index.js';
 
 const countable = (key) => {
     const { update, subscribe} = storable(key, 0, () => {

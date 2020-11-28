@@ -1,4 +1,4 @@
-import { storable, derived, writable, readable } from '../../dist/index.js';
+import { storable, derived, writable, readable } from '../../index.js';
 
 const base = storable('number', 3);
 const adder = storable('number1', 5);

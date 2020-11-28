@@ -1,4 +1,4 @@
-import { readable } from '../../dist/index.js';
+import { readable } from '../../index.js';
 
 const countable = (initial = 0) => {
     const { subscribe } = readable(initial, async set => {
