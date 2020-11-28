@@ -75,7 +75,7 @@ const store = readable(0, async (set) => {
 
 ## Storable
 
-The storable store is essentially the writable store with and extra method and integration with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage.
+The storable store is essentially the writable store with and extra 2 methods and integration with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage.
 
 ```js
 import { storable } from 'storable-state';
@@ -89,10 +89,18 @@ const store = storable('count', 0);
 
 <br>
 
-`detach` is a method that takes no arguments. It's purpose is to remove the value from local storage so that it won't be preserved on refres.
+`detach` is a method that takes no arguments. It's purpose is to remove the value from local storage so that it won't be preserved on refres. When detach is invoked, the store essentially behaves like a writable store.
 
 ```js
 store.detach();
+```
+
+<br>
+
+`attach` is a method that does the opposite of detach. It saves the store value back to local storage.
+
+```js
+store.attach();
 ```
 
 <br>
