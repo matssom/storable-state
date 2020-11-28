@@ -4,7 +4,7 @@ There are lot's of state management libraries. This one takes inspiration from t
 
 ## Stores
 
-The library is comprised of 4 store types. These 4 types are `writable`, `readable`, `storable` and `derived`. Writable can be written to, readable can be read only, storable uses the localStorage api to preserve data between site refresh and derived depends on one or more stores to calculate it's value.
+The library is comprised of 4 store types. These 4 types are `writable`, `readable`, `storable` and `derived`. Writable can be written to, readable can be read only, storable uses the localStorage api to preserve data between site refresh and derived depends on one or more stores to calculate it's value. All stores can be subscribed to.
 
 ## Documentation
 
