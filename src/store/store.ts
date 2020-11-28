@@ -3,7 +3,7 @@ import PubSub from '../lib/pubsub.js';
 export default class Store {
     protected state : any
     protected event : PubSub
-    protected cleanup : Function
+    private cleanup : Function | Promise<any>
     private start : Function
 
     /**
@@ -37,13 +37,19 @@ export default class Store {
         if (this.event.events['STATE_CHANGE'].length === 1 && this.start) this.cleanup = this.start(this.set);
         subscriber(this.state)
 
-        return () => {
+        return async () => {
             if 
             (
                 this.event.unsubscribe('STATE_CHANGE', subscriber) && 
-                this.event.events['STATE_CHANGE'].length === 0
+                this.event.events['STATE_CHANGE'].length === 0 &&
+                this.cleanup
             ) {
-                if (this.cleanup) this.cleanup();
+                try {
+                    const cleanup = await this.cleanup;
+                    cleanup();
+                } catch (err) {
+                    throw new Error("Could not run cleanup function, promise rejected. Please make sure your async setter can resolve.")
+                }
             }
         }
     }
