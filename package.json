@@ -2,7 +2,7 @@
   "name": "storable-state",
   "version": "1.0.0",
   "description": "State management library that integrates with localStorage",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "example": "webpack --config example.config.js",
     "build": "npx tsc -p tsconfig.json",
@@ -30,6 +30,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "files": [
-    "dist"
+    "dist/lib",
+    "dist/store",
+    "dist/index.js"
   ]
 }
