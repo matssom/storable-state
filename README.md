@@ -127,7 +127,7 @@ const store = derived(
 
 ## Custom Stores
 
-You can extend the stores with your own buildt in methods if you would like. The basic idea is to destructure the any of the stores into their methods and use them in other configurations. Here is an example of how you could achieve this:
+You can extend the stores with your own buildt in methods if you would like. The basic idea is to destructure any of the stores into their methods and use them in other configurations. Here is an example of how you could achieve this:
 
 ```js
 import { storable } from 'storable';
