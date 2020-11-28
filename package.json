@@ -4,7 +4,6 @@
   "description": "State management library that integrates with localStorage",
   "main": "index.js",
   "scripts": {
-    "example": "webpack --config example.config.js",
     "build": "npx tsc -p tsconfig.json",
     "watch": "tsc-watch"
   },
