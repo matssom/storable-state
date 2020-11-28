@@ -2,15 +2,18 @@ import Writable from './store.js';
 
 class Storable extends Writable {
     private key
+    private detached = false
 
     constructor(key : string, value? : any, start? : Function) {
         super(value, start);
         this.key = key;
         this.retrieve();
+        this.detach = this.detach.bind(this);
+        this.attach = this.attach.bind(this);
     }
 
     private save(value : any):void {
-        localStorage.setItem(this.key, JSON.stringify(value));
+        if (!this.detached) localStorage.setItem(this.key, JSON.stringify(value));
     }
 
     private retrieve():void {
@@ -25,6 +28,17 @@ class Storable extends Writable {
 
     update(mutator : Function):void {
         super.update(mutator);
+    }
+
+    detach():void {
+        this.detached = true;
+        localStorage.removeItem(this.key);
+    }
+
+    attach():void {
+        this.detached = false;
+        const unsubscribe = this.subscribe(value => this.save(value));
+        unsubscribe();
     }
 
 }

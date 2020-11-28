@@ -1,7 +1,7 @@
 import Readable from './readable.js';
 import Store from './store.js';
 
-export default (dependencies : Array<any>, update : Function) => {
+export default (dependencies : Array<any> | any, update : Function) => {
     const store = new Store();
 
     const values = [];
@@ -16,6 +16,8 @@ export default (dependencies : Array<any>, update : Function) => {
             })
             dependency.subscribe(subMap.get(i));
         });
+    } else {
+        dependencies.subscribe(value => store.set(update(value)))
     }
 
     return { subscribe : store.subscribe };

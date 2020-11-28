@@ -23,11 +23,15 @@ const store = writable(0, () => {
 });
 ```
 
+<br>
+
 `set` is a method that will update the store with a new value.
 
 ```js
 store.set(10);
 ```
+
+<br>
 
 `update` is a method that takes a callback function. It passes the current value to the callback. The return value of the callback is the new store value.
 
@@ -35,7 +39,9 @@ store.set(10);
 store.update(value => value +1);
 ```
 
-`subscribe` is a method that accepts a callback that will be called with the new value every time the store value changes. The return of this method is a function you can invoke ut unsubscribe.
+<br>
+
+`subscribe` is a method that accepts a callback that will be called with the new value every time the store value changes. The return of this method is a function you can invoke to unsubscribe.
 
 ```js
 const unsubscribe = store.subscribe(value => console.log(value));
@@ -63,13 +69,13 @@ const store = readable(0, async (set) => {
 });
 ```
 
-**NB:** the set method is also passed to the writable store if you want to use async there as well.
+**NB:** the `set` method is also passed to the writable store if you want to use async there as well.
 
 <br>
 
 ## Storable
 
-The storable store is essentially the same as the writable, however, the store will interact with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage.
+The storable store is essentially the writable store with and extra method and integration with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage.
 
 ```js
 import { storable } from 'storable-state';
@@ -80,6 +86,14 @@ const store = storable('count', 0);
 ```
 
 **NB:** Also here you can add the setup/teardown callback as the third parameter.
+
+<br>
+
+`detach` is a method that takes no arguments. It's purpose is to remove the value from local storage so that it won't be preserved on refres.
+
+```js
+store.detach();
+```
 
 <br>
 
@@ -99,4 +113,28 @@ const store = derived(
         return dividend / divisor;
     }
 )
+```
+
+<br>
+
+## Custom Stores
+
+You can extend the stores with your own buildt in methods if you would like. The basic idea is to destructure the any of the stores into their methods and use them in other configurations. Here is an example of how you could achieve this:
+
+```js
+import { storable } from 'storable';
+
+const createCountStore = (key = 'count') => {
+    const { subscribe, set, update, detatch } = storable(key, 0);
+
+    return {
+        subscribe,
+        increase:   () => update((value) => value + 1),
+        decrease:   () => update((value) => value - 1),
+        reset:      () => set(0),
+        detatch:    () => detatch()
+    }
+}
+
+export const store = createCountStore('count');
 ```
