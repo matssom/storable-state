@@ -1,6 +1,6 @@
 {
   "name": "storable-state",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "State management library that integrates with localStorage",
   "main": "index.js",
   "scripts": {
