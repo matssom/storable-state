@@ -1,23 +1,29 @@
 import Writable from './store.js';
-import serialize from 'serialize-javascript';
-import { deserialize } from '../lib/helpers.js';
-class Storable extends Writable {
+export class Storable extends Writable {
     constructor(key, value, start) {
         super(value, start);
         this.detached = false;
         this.key = key;
-        this.retrieve();
+        this.retrieve(value);
         this.detach = this.detach.bind(this);
         this.attach = this.attach.bind(this);
     }
+    serialize(value) {
+        return JSON.stringify(value);
+    }
+    deserialize(data) {
+        return JSON.parse(data);
+    }
     save(value) {
         if (!this.detached)
-            localStorage.setItem(this.key, serialize(value));
+            localStorage.setItem(this.key, this.serialize(value));
     }
-    retrieve() {
-        const value = localStorage.getItem(this.key);
-        if (!!value)
-            this.set(deserialize(value));
+    retrieve(value) {
+        const saved = localStorage.getItem(this.key);
+        if (!!saved)
+            this.set(this.deserialize(saved));
+        else
+            this.save(value);
     }
     set(newValue) {
         super.set(newValue);
