@@ -75,7 +75,7 @@ const store = readable(0, async (set) => {
 
 ## Storable
 
-The storable store is essentially the writable store with and extra 2 methods and integration with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage.
+The storable store is essentially the writable store with and extra 2 methods and integration with the localStorage api to preserve state between page refershes. To get this to work you need to provide a key to the storable store. This key will be used to save and retrieve the stored state from localStorage. Storable only supports values that can be parsed with `JSON.stringify()` and `JSON.parse()`. If you are looking to serialize other javascript apis, you can use the serializable store.
 
 ```js
 import { storable } from 'storable-state';
@@ -101,6 +101,22 @@ store.detach();
 
 ```js
 store.attach();
+```
+
+<br>
+
+## Serializable
+
+The serializable store does the exact same thing as the storable store, except that it also serializes more complex javascript apis like `Map` or `Function`. It uses yahoo's [serialize-javascript](https://github.com/yahoo/serialize-javascript). Check out their repo to see a full list of supported apis.
+
+```js
+import { serializable } from 'storable-state';
+
+const personRegister = new Map();
+person.set(1, 'John Doe');
+person.set(2, 'Jane Doe');
+
+const store = serializable('keyValue', personRegister);
 ```
 
 <br>
