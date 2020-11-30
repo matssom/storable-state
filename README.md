@@ -116,7 +116,7 @@ const personRegister = new Map();
 person.set(1, 'John Doe');
 person.set(2, 'Jane Doe');
 
-const store = serializable('keyValue', personRegister);
+const store = serializable('personRegister', personRegister);
 ```
 
 <br>
