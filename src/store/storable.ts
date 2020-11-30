@@ -1,4 +1,6 @@
 import Writable from './store.js';
+import serialize from 'serialize-javascript';
+import { deserialize } from '../lib/helpers.js';
 
 class Storable extends Writable {
     private key
@@ -13,12 +15,12 @@ class Storable extends Writable {
     }
 
     private save(value : any):void {
-        if (!this.detached) localStorage.setItem(this.key, JSON.stringify(value));
+        if (!this.detached) localStorage.setItem(this.key, serialize(value));
     }
 
     private retrieve():void {
         const value = localStorage.getItem(this.key);
-        if (!!value) this.set(JSON.parse(value));
+        if (!!value) this.set(deserialize(value));
     }
 
     set(newValue : any):void {
