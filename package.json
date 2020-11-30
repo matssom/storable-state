@@ -4,14 +4,13 @@
   "description": "State management library that integrates with localStorage",
   "main": "index.js",
   "scripts": {
-    "test": "tsc-watch"
+    "test": "concurrently \"tsc-watch\" \"webpack --config browserTest.config.js\""
   },
   "keywords": [
     "store",
     "storable",
     "pubsub",
     "writable",
-    "storable",
     "readable",
     "state",
     "state-management"
@@ -19,9 +18,13 @@
   "author": "Mats Sommervold <mats@sommervold.net> (https://matssom.com)",
   "license": "MIT",
   "dependencies": {
+    "buffer": "^6.0.3",
     "serialize-javascript": "^5.0.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "concurrently": "^5.3.0",
+    "mocha": "^8.2.1",
     "ts-loader": "^8.0.11",
     "tsc-watch": "^4.2.9",
     "typescript": "^4.1.2",
@@ -30,8 +33,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "files": [
-    "lib/*.js",
-    "store/*.js",
+    "dist",
     "index.js"
   ]
 }
